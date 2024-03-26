@@ -4,13 +4,15 @@ importName: inputs: let
 
       # gx.nvim
       gx-nvim = super.vimUtils.buildVimPlugin {
-        name = "gx.nvim";
+        pname = "gx.nvim";
+        version = "2024-03-26";
         src = inputs.gx-nvim;
       };
 
       # nvim-tmux-navigation
       nvim-tmux-navigation = super.vimUtils.buildVimPlugin {
-        name = "nvim-tmux-navigation";
+        pname = "nvim-tmux-navigation";
+        version = "2024-03-26";
         src = inputs.nvim-tmux-navigation;
       };
 

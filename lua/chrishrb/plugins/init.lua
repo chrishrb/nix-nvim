@@ -8,6 +8,7 @@ local plugins = {
   {
     "catppuccin/nvim",
     config = function() require("chrishrb.plugins.config.colorscheme") end,
+    name = "catppuccin-nvim",
     lazy = false,
   },
   {
@@ -282,6 +283,7 @@ if require('nixCatsUtils').isNixCats then
   -- it wasnt detecting these because the names are slightly different.
   -- when that happens, add them to the list, then also specify name in the lazySpec
   pluginList[ [[LuaSnip]] ] = ""
+  pluginList[ [[nvim]] ] = ""
   nixLazyPath = allPlugins.start[ [[lazy.nvim]] ]
 end
 
