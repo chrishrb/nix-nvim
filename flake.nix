@@ -27,6 +27,16 @@
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     nixCats.inputs.nixpkgs.follows = "nixpkgs";
     nixCats.inputs.flake-utils.follows = "flake-utils";
+
+    # plugins that are not in nixpkg
+    gx-nvim = {
+      url = "github:chrishrb/gx.nvim";
+      flake = false;
+    };
+    nvim-tmux-navigation = {
+      url = "github:alexghergh/nvim-tmux-navigation";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs
@@ -108,48 +118,75 @@
         lazy = with pkgs.vimPlugins; [
           lazy-nvim
         ];
-        general = {
-          gitPlugins = with pkgs.neovimPlugins; [
-            hlargs
-          ];
-          vimPlugins = with pkgs.vimPlugins; [
-            neodev-nvim
-            neoconf-nvim
-            nvim-cmp
-            friendly-snippets
-            luasnip
-            cmp_luasnip
-            cmp-path
-            cmp-nvim-lsp
-            telescope-fzf-native-nvim
-            plenary-nvim
-            telescope-nvim
-            nvim-treesitter-textobjects
-            nvim-treesitter.withAllGrammars
-            nvim-lspconfig
-            fidget-nvim
+        java = with pkgs.vimPlugins; [
+          nvim-jdtls
+        ];
+        general = with pkgs.vimPlugins; {
+          theme = builtins.getAttr packageDef.categories.colorscheme {
+            # Theme switcher without creating a new category
+            "catppuccin" = catppuccin-nvim;
+            # "tokyonight" = tokyonight-nvim;
+          };
+          look = [
             lualine-nvim
-            gitsigns-nvim
+            tabline-nvim
+            alpha-nvim
+            nvim-web-devicons
+          ];
+          navigation = [
+            nvim-tree-lua
             which-key-nvim
-            comment-nvim
-            vim-sleuth
+          ];
+          lsp = [
+            nvim-lspconfig
+            hover-nvim
+            null-ls-nvim
+            nvim-navic
+            trouble-nvim
+          ];
+          cmp = [
+            nvim-cmp
+            cmp-buffer
+            cmp-path
+            cmp-cmdline
+            cmp-nvim-lsp
+            cmp-nvim-lsp-document-symbol
+
+            cmp_luasnip
+            luasnip
+            friendly-snippets
+
+            cmp-under-comparator
+            cmp-spell
+
+            copilot-lua
+            copilot-cmp
+          ];
+          core = [
+            plenary-nvim
+            nvim-treesitter.withAllGrammars
+            nvim-ts-autotag
+            telescope-nvim
+            telescope-fzf-native-nvim
             vim-fugitive
-            vim-rhubarb
-            vim-repeat
+            gitsigns-nvim
+          ];
+          utils = [
+            nvim-autopairs
+            nvim-surround
             indent-blankline-nvim
+            nvim-comment
+            BufOnly-vim
+            vim-bbye
+            project-nvim
+            mkdir-nvim
+            bigfile-nvim
+          ];
+          custom = with pkgs.nixCatsBuilds; [
+              nvim-tmux-navigation
+              gx-nvim
           ];
         };
-        # You can retreive information from the
-        # packageDefinitions of the package this was packaged with.
-        # :help nixCats.flake.outputs.categoryDefinitions.scheme
-        themer = with pkgs.vimPlugins;
-          (builtins.getAttr packageDef.categories.colorscheme {
-              # Theme switcher without creating a new category
-              "onedark" = onedark-nvim;
-              # "catppuccin" = catppuccin-nvim;
-              # "tokyonight" = tokyonight-nvim;
-            }
-          );
       };
 
       # not loaded automatically at startup.
@@ -233,23 +270,14 @@
           lazy = true;
           generalBuildInputs = true;
           general = true;
+          java = true;
+
           # this does not have an associated category of plugins, 
           # but lua can still check for it
           lspDebugMode = false;
+
           # you could also pass something else:
-          themer = true;
-          colorscheme = "onedark";
-          theBestCat = "says meow!!";
-          theWorstCat = {
-            thing'1 = [ "MEOW" "HISSS" ];
-            thing2 = [
-              "I LOVE KEYBOARDS"
-              {
-                thing3 = [ "give" "treat" ];
-              }
-            ];
-          };
-          # see :help nixCats
+          colorscheme = "catppuccin";
         };
       };
     };
