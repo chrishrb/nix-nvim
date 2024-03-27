@@ -73,8 +73,6 @@ local plugins = {
       },
       -- for formatters and linters
       "jose-elias-alvarez/null-ls.nvim",
-      -- winbar
-      "SmiteshP/nvim-navic",
     },
   },
   { -- show diagnostics of current document/workspace
@@ -87,16 +85,15 @@ local plugins = {
   -----------------------------------------------------------------------------
   -- DAP (Debugger)
   -----------------------------------------------------------------------------
-  -- TODO
-  -- { -- debugging with nvim
-  --   "mfussenegger/nvim-dap", -- debugger
-  --   dependencies = {
-  --     "rcarriga/nvim-dap-ui", -- ui for debugger
-  --     "jayp0521/mason-nvim-dap.nvim", -- mason adapter for dap
-  --     "theHamsta/nvim-dap-virtual-text", -- show line visual
-  --   },
-  --   config = function() require("chrishrb.plugins.config.dap") end,
-  -- },
+  { -- debugging with nvim
+    "mfussenegger/nvim-dap", -- debugger
+    dependencies = {
+      "rcarriga/nvim-dap-ui", -- ui for debugger
+      "theHamsta/nvim-dap-virtual-text", -- show line visual
+    },
+    config = function() require("chrishrb.plugins.config.dap") end,
+    enabled = nixCats("debug"),
+  },
 
   -----------------------------------------------------------------------------
   -- Completions

@@ -1,24 +1,8 @@
-# Copyright (c) 2023 BirdeeHub
+# Copyright (c) 2023 BirdeeHub, chrishrb
 # Licensed under the MIT license
 
-# This is an empty nixCats config.
-# you may import this template directly into your nvim folder
-# and then add plugins to categories here,
-# and call the plugins with their default functions
-# within your lua, rather than through the nvim package manager's method.
-# Use the help, and the example repository https://github.com/BirdeeHub/nixCats-nvim
-
-# It allows for easy adoption of nix,
-# while still providing all the extra nix features immediately.
-# Configure in lua, check for a few categories, set a few settings,
-# output packages with combinations of those categories and settings.
-
-# All the same options you make here will be automatically exported in a form available
-# in home manager and in nixosModules, as well as from other flakes.
-# each section is tagged with its relevant help section.
-
 {
-  description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
+  description = "chrishrb's nix-nvim";
 
   inputs = {
     # LAZY WRAPPER ONLY WORKS ON UNSTABLE
@@ -109,7 +93,37 @@
       lspsAndRuntimeDeps = {
         general = with pkgs; [
           universal-ctags ripgrep fd gcc
-          nix-doc nil lua-language-server nixd
+          nix-doc nil nixd # nix
+          lua-language-server # lua
+          vscode-langservers-extracted  # html, css, json
+          nodePackages.bash-language-server # bash
+          yaml-language-server # yaml
+        ];
+        go = with pkgs; [
+          gopls
+          delve
+        ];
+        python = with pkgs.python311Packages; [
+          # jedi-language-server
+          python-lsp-server
+          debugpy
+          pytest
+          pylint
+        ];
+        web = with pkgs; [
+          nodePackages.typescript-language-server
+          tailwindcss-language-server
+          nodePackages.eslint
+          nodePackages.volar
+        ];
+        java = with pkgs; [
+          jdt-language-server
+        ];
+        devops = with pkgs; [
+          terraform-ls
+        ];
+        latex = with pkgs; [
+          texlab
         ];
       };
 
@@ -118,8 +132,19 @@
         lazy = with pkgs.vimPlugins; [
           lazy-nvim
         ];
+        go = with pkgs.vimPlugins; [
+          nvim-dap-go
+        ];
+        python = with pkgs.vimPlugins; [
+          nvim-dap-python
+        ];
         java = with pkgs.vimPlugins; [
           nvim-jdtls
+        ];
+        debug = with pkgs.vimPlugins; [
+          nvim-dap
+          nvim-dap-ui
+          nvim-dap-virtual-text
         ];
         general = with pkgs.vimPlugins; {
           theme = builtins.getAttr packageDef.categories.colorscheme {
@@ -141,7 +166,6 @@
             nvim-lspconfig
             hover-nvim
             null-ls-nvim
-            nvim-navic
             trouble-nvim
           ];
           cmp = [
@@ -183,8 +207,8 @@
             bigfile-nvim
           ];
           custom = with pkgs.nixCatsBuilds; [
-              nvim-tmux-navigation
-              gx-nvim
+            nvim-tmux-navigation
+            gx-nvim
           ];
         };
       };
@@ -234,14 +258,29 @@
         test = (_:[]);
       };
       extraPython3Packages = {
-        test = (_:[]);
+        python = (py: [
+          py.debugpy
+          py.pylsp-mypy
+          py.pyls-isort
+          py.python-lsp-server
+          py.python-lsp-black
+          py.pytest
+          py.pylint
+          # python-lsp-ruff
+          # pyls-flake8
+          # pylsp-rope
+          # yapf
+          # autopep8
+        ]);
       };
       extraLuaPackages = {
         test = [ (_:[]) ];
       };
     };
 
-
+    extraJavaItems = pkgs: {
+      java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+    };
 
     # packageDefinitions:
 
@@ -255,12 +294,12 @@
     # see :help nixCats.flake.outputs.packageDefinitions
     packageDefinitions = {
       # these also recieve our pkgs variable
-      nixCats = { pkgs, ... }@misc: {
+      chrisNvim = { pkgs, ... }@misc: {
         # see :help nixCats.flake.outputs.settings
         settings = {
           # will check for config in the store rather than .config
           wrapRc = true;
-          configDirName = "testerstart-nvim";
+          configDirName = "chrishrb-nvim";
           aliases = [ "vi" "vim" ];
           # caution: this option must be the same for all packages.
           # nvimSRC = inputs.neovim;
@@ -270,7 +309,15 @@
           lazy = true;
           generalBuildInputs = true;
           general = true;
+          debug = true;
+
+          # languages
+          go = true;
+          python = true;
+          web = true;
           java = true;
+          devops = true;
+          latex = false;
 
           # this does not have an associated category of plugins, 
           # but lua can still check for it
@@ -281,9 +328,10 @@
         };
       };
     };
-  # In this section, the main thing you will need to do is change the default package name
-  # to the name of the packageDefinitions entry you wish to use as the default.
-    defaultPackageName = "nixCats";
+
+    # In this section, the main thing you will need to do is change the default package name
+    # to the name of the packageDefinitions entry you wish to use as the default.
+    defaultPackageName = "chrisNvim";
   in
 
   # see :help nixCats.flake.outputs.exports

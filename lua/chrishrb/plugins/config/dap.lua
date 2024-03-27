@@ -8,28 +8,12 @@ if not dap_ui_status_ok then
   return
 end
 
-local mason_nvim_dap_status_ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
-if not mason_nvim_dap_status_ok then
-  return
-end
-
 local nvim_dap_virtual_text_status_ok, nvim_dap_virtual_text = pcall(require, "nvim-dap-virtual-text")
 if not nvim_dap_virtual_text_status_ok then
   return
 end
 
 local icons = require "chrishrb.config.icons"
-
--- mason-nvim-dap
-mason_nvim_dap.setup({
-  -- see https://github.com/jay-babu/mason-nvim-dap.nvim/blob/main/lua/mason-nvim-dap/mappings/source.lua
-  ensure_installed = {
-    "python", -- python
-    "delve", -- go
-  },
-  handlers = {},
-  automatic_setup = true,
-});
 
 -- dap-ui
 dapui.setup {
@@ -102,4 +86,13 @@ dap.listeners.before.event_terminated["dapui_config"] = function()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
   dapui.close {}
+end
+
+-- install lang specific configs
+if nixCats('go') then
+  require("chrishrb.dap.go")
+end
+
+if nixCats('python') then
+  require("chrishrb.dap.python")
 end

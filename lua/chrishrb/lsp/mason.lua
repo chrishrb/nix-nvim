@@ -1,24 +1,19 @@
--- ensured installed by mason
+-- category: general
 local servers = {
+  -- vscode-langservers-extracted
   "cssls",
   "html",
-  "jdtls",
   "jsonls",
-  "lua_ls",
-  "tsserver",
-  "pyright",
+
   "yamlls",
   "bashls",
-  "rust_analyzer",
-  "gopls",
-  "texlab",
-  "volar",
-  "terraformls",
-  "tailwindcss",
-  "nil"
-  -- "ltex",
+  "lua_ls",
+
+  "nil_ls",
+  "nixd",
 }
 
+-- disable mason for nixCats
 if not require('nixCatsUtils').isNixCats then
   require('mason').setup()
   require('mason-lspconfig').setup {
@@ -27,6 +22,40 @@ if not require('nixCatsUtils').isNixCats then
   }
 end
 
+
+-- debug mode
+if (require('nixCatsUtils').isNixCats and nixCats('lspDebugMode')) then
+  vim.lsp.set_log_level("debug")
+end
+
+-- add language servers if category is enabled
+if nixCats("go") then
+  servers[#servers + 1] = "gopls"
+end
+
+if nixCats("python") then
+  servers[#servers + 1] = "pylsp"
+end
+
+if nixCats("web") then
+  servers[#servers + 1] = "tsserver"
+  servers[#servers + 1] = "tailwindcss"
+  servers[#servers + 1] = "volar"
+end
+
+if nixCats("java") then
+  servers[#servers + 1] = "jdtls"
+end
+
+if nixCats("devops") then
+  servers[#servers + 1] = "terraformls"
+end
+
+if nixCats("latex") then
+  servers[#servers + 1] = "texlab"
+end
+
+-- setup handlers
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then
   return
@@ -54,28 +83,6 @@ for _, server in pairs(servers) do
 
   if server == "jdtls" then
     goto continue
-  end
-
-  if server == "rust_analyzer" then
-    local rust_opts = require "chrishrb.lsp.settings.rust"
-    local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
-    if not rust_tools_status_ok then
-      return
-    end
-
-    rust_tools.setup(rust_opts)
-    goto continue
-  end
-
-  if server == "gopls" then
-    local go_opts = require "chrishrb.lsp.settings.go"
-    local go_tools_status_ok, go_tools = pcall(require, "go")
-    if not go_tools_status_ok then
-      return
-    end
-
-    go_tools.setup(go_opts)
-	 	opts = vim.tbl_deep_extend("force", require('go.lsp').config(), opts)
   end
 
   lspconfig[server].setup(opts)
