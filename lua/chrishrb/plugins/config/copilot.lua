@@ -4,8 +4,10 @@ if not status_ok then
   return
 end
 
-copilot.setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-})
+-- INFO: disable copilot
+
+-- copilot.setup({
+--   suggestion = { enabled = false },
+--   panel = { enabled = false },
+-- })
 

@@ -18,7 +18,6 @@ null_ls.setup({
     diagnostics.pylint,
     diagnostics.mypy,
     formatting.isort,
-    formatting.google_java_format.with({ extra_args = {"--aosp" } }),
     formatting.nixfmt
 	},
 })
