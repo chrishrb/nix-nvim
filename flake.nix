@@ -93,8 +93,8 @@
       lspsAndRuntimeDeps = {
         general = with pkgs; [
           universal-ctags ripgrep fd gcc
-          nix-doc nil nixd # nix
-          lua-language-server # lua
+          nix-doc nil nixd nixfmt # nix
+          lua-language-server stylua # lua
           vscode-langservers-extracted  # html, css, json
           nodePackages.bash-language-server # bash
           yaml-language-server # yaml
@@ -165,7 +165,7 @@
           lsp = [
             nvim-lspconfig
             hover-nvim
-            null-ls-nvim
+            none-ls-nvim
             trouble-nvim
           ];
           cmp = [
@@ -365,6 +365,8 @@
       shellHook = ''
       '';
     };
+
+    # TODO: add check
 
     # To choose settings and categories from the flake that calls this flake.
     # and you export overlays so people dont have to redefine stuff.

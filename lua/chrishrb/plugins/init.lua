@@ -72,7 +72,7 @@ local plugins = {
         config = function() require("chrishrb.plugins.config.hover") end,
       },
       -- for formatters and linters
-      "jose-elias-alvarez/null-ls.nvim",
+      "nvimtools/none-ls.nvim",
     },
   },
   { -- show diagnostics of current document/workspace
