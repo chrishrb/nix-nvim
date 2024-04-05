@@ -4,10 +4,9 @@ if not status_ok then
   return
 end
 
--- INFO: disable copilot
-
--- copilot.setup({
---   suggestion = { enabled = false },
---   panel = { enabled = false },
--- })
-
+if nixCats('ai') then
+  copilot.setup({
+    suggestion = { enabled = false },
+    panel = { enabled = false },
+  })
+end

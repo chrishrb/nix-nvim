@@ -149,7 +149,6 @@ local plugins = {
       -- autoclose and rename html tags
       "windwp/nvim-ts-autotag",
     },
-    event = "User FileOpened",
   },
 
   -----------------------------------------------------------------------------

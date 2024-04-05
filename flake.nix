@@ -93,7 +93,7 @@
       lspsAndRuntimeDeps = {
         general = with pkgs; [
           universal-ctags ripgrep fd gcc
-          nix-doc nil nixd nixfmt # nix
+          nix-doc nil nixd nixfmt-rfc-style # nix
           lua-language-server stylua # lua
           vscode-langservers-extracted  # html, css, json
           nodePackages.bash-language-server # bash
@@ -318,6 +318,7 @@
           java = true;
           devops = true;
           latex = false;
+          ai = false;
 
           # this does not have an associated category of plugins, 
           # but lua can still check for it

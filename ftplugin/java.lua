@@ -1,6 +1,7 @@
 vim.opt_local.shiftwidth = 4
 vim.opt_local.tabstop = 4
-vim.opt_local.cmdheight = 2 -- more space in the neovim command line for displaying messages
+
+if not require('nixCatsUtils').isNixCats then
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -263,3 +264,4 @@ which_key.register(vmappings, vopts)
 
 -- debugging
 -- git clone git@github.com:microsoft/java-debug.git
+end
