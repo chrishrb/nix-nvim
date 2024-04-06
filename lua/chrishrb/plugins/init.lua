@@ -66,7 +66,10 @@ local plugins = {
       -- java and json language server
       {
         "mfussenegger/nvim-jdtls",
-        dependencies = "mfussenegger/nvim-dap", -- debugger
+        dependencies = {
+          "mfussenegger/nvim-dap", -- debugger
+          enabled = nixCats("debug"),
+        }
       },
       -- get documentation when pressing K
       {
@@ -130,12 +133,14 @@ local plugins = {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
+    enabled = nixCats("ai"),
     config = function()
       require("chrishrb.plugins.config.copilot")
     end,
   },
   {
     "zbirenbaum/copilot-cmp",
+    enabled = nixCats("ai"),
     config = function ()
       require("copilot_cmp").setup()
     end

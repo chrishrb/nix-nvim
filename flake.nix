@@ -113,12 +113,15 @@
           debugpy
           pytest
           pylint
+          mypy
+          isort
         ];
         web = with pkgs; [
           nodePackages.typescript-language-server
           tailwindcss-language-server
           nodePackages.eslint
           nodePackages.volar
+          nodePackages.prettier
         ];
         java = with pkgs; [
           jdt-language-server
@@ -263,20 +266,7 @@
         test = (_:[]);
       };
       extraPython3Packages = {
-        python = (py: [
-          py.debugpy
-          py.pylsp-mypy
-          py.pyls-isort
-          py.python-lsp-server
-          py.python-lsp-black
-          py.pytest
-          py.pylint
-          # python-lsp-ruff
-          # pyls-flake8
-          # pylsp-rope
-          # yapf
-          # autopep8
-        ]);
+        test = (_:[]);
       };
       extraLuaPackages = {
         test = [ (_:[]) ];
@@ -362,7 +352,9 @@
 
     # this will make an overlay out of each of the packageDefinitions defined above
     # and set the default overlay to the one named here.
-    overlays = utils.mkOverlays nixCatsBuilder packageDefinitions defaultPackageName;
+
+    # TODO: comment out after #19 is solved
+    #overlays = utils.mkOverlays nixCatsBuilder packageDefinitions defaultPackageName;
 
     # choose your package for devShell
     # and add whatever else you want in it.
@@ -373,8 +365,6 @@
       shellHook = ''
       '';
     };
-
-    # TODO: add check
 
     # To choose settings and categories from the flake that calls this flake.
     # and you export overlays so people dont have to redefine stuff.

@@ -1,8 +1,5 @@
 vim.defer_fn(function()
-  local status_ok, configs = pcall(require, "nvim-treesitter.configs")
-  if not status_ok then
-    return
-  end
+  local configs = require("nvim-treesitter.configs")
 
   configs.setup {
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)

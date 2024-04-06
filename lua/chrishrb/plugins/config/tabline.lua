@@ -1,8 +1,4 @@
-local status_ok, tabline = pcall(require, "tabline")
-if not status_ok then
-  return
-end
-
+local tabline = require("tabline")
 local icons = require "chrishrb.config.icons"
 
 tabline.setup {

@@ -1,8 +1,4 @@
-local status_ok, gitsigns = pcall(require, "gitsigns")
-if not status_ok then
-  return
-end
-
+local gitsigns = require("gitsigns")
 local icons = require "chrishrb.config.icons"
 
 gitsigns.setup {

@@ -2,19 +2,68 @@ if not require("nixCatsUtils").isNixCats then
   return
 end
 
--- debugger config
-local jda_server_jar = vim.fn.glob(nixCats("javaExtras.java-debug-adapter") .. "/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar")
-local jt_server_jars = vim.fn.glob(nixCats("javaExtras.java-test") .. "/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar")
+-- setup java lsp settings
+vim.opt_local.shiftwidth = 4
+vim.opt_local.tabstop = 4
 
+vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)"
+vim.cmd "command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)"
+vim.cmd "command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()"
+-- vim.cmd "command! -buffer JdtJol lua require('jdtls').jol()"
+vim.cmd "command! -buffer JdtBytecode lua require('jdtls').javap()"
+-- vim.cmd "command! -buffer JdtJshell lua require('jdtls').jshell()"
+
+local which_key = require("which-key")
+local which_key_config = require("chrishrb.plugins.config.whichkey")
+
+local mappings = {
+  L = {
+    name = "Java",
+    o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", "Organize Imports" },
+    v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", "Extract Variable" },
+    c = { "<Cmd>lua require('jdtls').extract_constant()<CR>", "Extract Constant" },
+    u = { "<Cmd>JdtUpdateConfig<CR>", "Update Config" },
+  },
+}
+
+local vmappings = {
+  L = {
+    name = "Java",
+    v = { "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", "Extract Variable" },
+    c = { "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", "Extract Constant" },
+    m = { "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", "Extract Method" },
+  },
+}
+
+-- setup java dap settings
 local bundles = {}
-vim.list_extend(bundles, vim.split(jt_server_jars, "\n"))
-vim.list_extend(bundles, vim.split(jda_server_jar, "\n"))
+if nixCats("debug") then
+  -- debugger config
+  local jda_server_jar = vim.fn.glob(nixCats("javaExtras.java-debug-adapter") .. "/share/vscode/extensions/vscjava.vscode-java-debug/server/com.microsoft.java.debug.plugin-*.jar")
+  local jt_server_jars = vim.fn.glob(nixCats("javaExtras.java-test") .. "/share/vscode/extensions/vscjava.vscode-java-test/server/*.jar")
 
+  vim.list_extend(bundles, vim.split(jt_server_jars, "\n"))
+  vim.list_extend(bundles, vim.split(jda_server_jar, "\n"))
+
+  mappings.L = vim.tbl_extend("error", mappings.L, {
+    t = { "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", "Test Method" },
+    T = { "<Cmd>lua require'jdtls'.test_class()<CR>", "Test Class" },
+  })
+end
+
+-- register keybindings
+which_key.register(mappings, which_key_config.opts)
+which_key.register(vmappings, which_key_config.vopts)
+
+-- return config for java
 return {
   on_attach = function (client, buffer)
     require("chrishrb.lsp.handlers").on_attach(client, buffer)
-    require("jdtls").setup_dap { hotcodereplace = "auto" }
-    require("jdtls.dap").setup_dap_main_class_configs() -- discover main class
+
+    if nixCats("debug") then
+      require("jdtls").setup_dap { hotcodereplace = "auto" }
+      require("jdtls.dap").setup_dap_main_class_configs() -- discover main class
+    end
   end,
   capabilities = require("chrishrb.lsp.handlers").capabilities,
 	java = {

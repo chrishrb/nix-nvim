@@ -1,5 +1,4 @@
-local status_ok, comment = pcall(require, "nvim_comment")
-if not status_ok then return end
+local comment = require("nvim_comment")
 
 comment.setup ({
   -- Linters prefer comment and line to have a space in between markers
