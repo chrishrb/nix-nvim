@@ -74,6 +74,22 @@
         "type": "github"
       }
     },
+    "nvim-nio": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1712221544,
+        "narHash": "sha256-ZRYclqsgAvlRBwb59XHlqVat7CxUJTH1rD6QLwh1ang=",
+        "owner": "nvim-neotest",
+        "repo": "nvim-nio",
+        "rev": "5800f585def265d52f1d8848133217c800bcb25d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-neotest",
+        "repo": "nvim-nio",
+        "type": "github"
+      }
+    },
     "nvim-tmux-navigation": {
       "flake": false,
       "locked": {
@@ -112,6 +128,7 @@
         "gx-nvim": "gx-nvim",
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
+        "nvim-nio": "nvim-nio",
         "nvim-tmux-navigation": "nvim-tmux-navigation"
       }
     },

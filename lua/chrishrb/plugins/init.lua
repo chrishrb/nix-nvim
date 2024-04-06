@@ -63,9 +63,11 @@ local plugins = {
         "williamboman/mason-lspconfig.nvim",
         enabled = require("nixCatsUtils.lazyCat").lazyAdd(true, false),
       },
-
       -- java and json language server
-      "mfussenegger/nvim-jdtls",
+      {
+        "mfussenegger/nvim-jdtls",
+        dependencies = "mfussenegger/nvim-dap", -- debugger
+      },
       -- get documentation when pressing K
       {
         "lewis6991/hover.nvim",
@@ -86,9 +88,10 @@ local plugins = {
   -- DAP (Debugger)
   -----------------------------------------------------------------------------
   { -- debugging with nvim
-    "mfussenegger/nvim-dap", -- debugger
+    "rcarriga/nvim-dap-ui", -- ui for debugger
     dependencies = {
-      "rcarriga/nvim-dap-ui", -- ui for debugger
+      "mfussenegger/nvim-dap", -- debugger
+      "nvim-neotest/nvim-nio", -- important for dapui
       "theHamsta/nvim-dap-virtual-text", -- show line visual
     },
     config = function() require("chrishrb.plugins.config.dap") end,

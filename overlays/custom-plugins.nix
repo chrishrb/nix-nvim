@@ -16,6 +16,13 @@ importName: inputs: let
         src = inputs.nvim-tmux-navigation;
       };
 
+      # nvim-tmux-navigation
+      nvim-nio = super.vimUtils.buildVimPlugin {
+        pname = "nvim-nio";
+        version = "2024-03-26";
+        src = inputs.nvim-nio;
+      };
+
     };
   };
 in

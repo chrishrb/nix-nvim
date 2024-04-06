@@ -1,17 +1,4 @@
-local dap_status_ok, dap = pcall(require, "dap")
-if not dap_status_ok then
-  return
-end
-
-local dap_ui_status_ok, dapui = pcall(require, "dapui")
-if not dap_ui_status_ok then
-  return
-end
-
-local nvim_dap_virtual_text_status_ok, nvim_dap_virtual_text = pcall(require, "nvim-dap-virtual-text")
-if not nvim_dap_virtual_text_status_ok then
-  return
-end
+local dap, dapui, nvim_dap_virtual_text = require("dap"), require("dapui"), require("nvim-dap-virtual-text")
 
 local icons = require "chrishrb.config.icons"
 

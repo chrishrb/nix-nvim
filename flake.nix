@@ -21,6 +21,10 @@
       url = "github:alexghergh/nvim-tmux-navigation";
       flake = false;
     };
+    nvim-nio = {
+      url = "github:nvim-neotest/nvim-nio";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs
@@ -145,6 +149,7 @@
           nvim-dap
           nvim-dap-ui
           nvim-dap-virtual-text
+          pkgs.nixCatsBuilds.nvim-nio
         ];
         general = with pkgs.vimPlugins; {
           theme = builtins.getAttr packageDef.categories.colorscheme {
@@ -279,6 +284,7 @@
     };
 
     extraJavaItems = pkgs: {
+      java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
       java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
     };
 
@@ -316,6 +322,7 @@
           python = true;
           web = true;
           java = true;
+          javaExtras = extraJavaItems pkgs;
           devops = true;
           latex = false;
           ai = false;
