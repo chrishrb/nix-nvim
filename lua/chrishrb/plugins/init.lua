@@ -140,7 +140,6 @@ local plugins = {
   },
   {
     "zbirenbaum/copilot-cmp",
-    enabled = nixCats("ai"),
     config = function ()
       require("copilot_cmp").setup()
     end

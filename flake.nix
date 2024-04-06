@@ -191,8 +191,10 @@
             cmp-under-comparator
             cmp-spell
 
-            copilot-lua
             copilot-cmp
+          ];
+          ai = [
+            copilot-lua
           ];
           core = [
             plenary-nvim
