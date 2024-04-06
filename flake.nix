@@ -108,13 +108,7 @@
           delve
         ];
         python = with pkgs.python311Packages; [
-          # jedi-language-server
           python-lsp-server
-          debugpy
-          pytest
-          pylint
-          mypy
-          isort
         ];
         web = with pkgs; [
           nodePackages.typescript-language-server
@@ -268,7 +262,10 @@
         test = (_:[]);
       };
       extraPython3Packages = {
-        test = (_:[]);
+        python = (py:[
+          py.debugpy
+          py.python-lsp-server
+        ]);
       };
       extraLuaPackages = {
         test = [ (_:[]) ];
@@ -321,7 +318,7 @@
 
           # this does not have an associated category of plugins, 
           # but lua can still check for it
-          lspDebugMode = false;
+          lspDebugMode = true;
 
           # you could also pass something else:
           colorscheme = "catppuccin";
