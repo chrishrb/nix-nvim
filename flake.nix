@@ -289,7 +289,7 @@
     # see :help nixCats.flake.outputs.packageDefinitions
     packageDefinitions = {
       # these also recieve our pkgs variable
-      chrisNvim = { pkgs, ... }@misc: {
+      chrisNvim = { pkgs, ... }: {
         # see :help nixCats.flake.outputs.settings
         settings = {
           # will check for config in the store rather than .config
