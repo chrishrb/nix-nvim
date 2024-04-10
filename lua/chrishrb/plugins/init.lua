@@ -96,6 +96,7 @@ local plugins = {
       "mfussenegger/nvim-dap", -- debugger
       "nvim-neotest/nvim-nio", -- important for dapui
       "theHamsta/nvim-dap-virtual-text", -- show line visual
+      'leoluz/nvim-dap-go', -- debugger for go
     },
     config = function() require("chrishrb.plugins.config.dap") end,
     enabled = nixCats("debug"),
@@ -137,6 +138,18 @@ local plugins = {
     config = function()
       require("chrishrb.plugins.config.copilot")
     end,
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+    },
+    enabled = nixCats("ai"),
+    opts = {
+      debug = true, -- Enable debugging
+    },
   },
   {
     "zbirenbaum/copilot-cmp",

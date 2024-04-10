@@ -25,6 +25,10 @@
       url = "github:nvim-neotest/nvim-nio";
       flake = false;
     };
+    copilot-chat-nvim = {
+      url = "github:CopilotC-Nvim/CopilotChat.nvim";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs
@@ -148,6 +152,10 @@
           nvim-dap-virtual-text
           pkgs.nixCatsBuilds.nvim-nio
         ];
+        ai = with pkgs.vimPlugins; [
+          copilot-lua
+          pkgs.nixCatsBuilds.copilot-chat-nvim
+        ];
         general = with pkgs.vimPlugins; {
           theme = builtins.getAttr packageDef.categories.colorscheme {
             # Theme switcher without creating a new category
@@ -186,9 +194,6 @@
             cmp-spell
 
             copilot-cmp
-          ];
-          ai = [
-            copilot-lua
           ];
           core = [
             plenary-nvim

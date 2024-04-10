@@ -23,6 +23,13 @@ importName: inputs: let
         src = inputs.nvim-nio;
       };
 
+      # nvim-tmux-navigation
+      copilot-chat-nvim = super.vimUtils.buildVimPlugin {
+        pname = "CopilotChat.nvim";
+        version = "2024-03-26";
+        src = inputs.copilot-chat-nvim;
+      };
+
     };
   };
 in
