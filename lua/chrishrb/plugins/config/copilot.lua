@@ -1,11 +1,13 @@
+-- setup copilot
 local copilot = require("copilot")
-local copilotChat = require("CopilotChat")
 
 copilot.setup {
   suggestion = { enabled = false },
   panel = { enabled = false },
 }
 
+-- setup copilot chat
+local copilotChat = require("CopilotChat")
 copilotChat.setup()
 
 -- setup which-key mappings
@@ -16,13 +18,21 @@ local mappings = {
   c = {
     name = "Copilot",
     c = { "<cmd>CopilotChatToggle<CR>", "Chat" },
-    e = { "<cmd>CopilotChatExplain<CR>", "Explain code" },
-    t = { "<cmd>CopilotChatTests<CR>", "Generate tests" },
-    f = { "<cmd>CopilotChatFix<CR>", "Fix bug" },
-    o = { "<cmd>CopilotChatOptimize<CR>", "Optimize code" },
-    d = { "<cmd>CopilotChatDocs<CR>", "Write docs for selected code" },
+    f = { "<cmd>CopilotChatFix<CR>", "Fix diagnostics" },
     m = { "<cmd>CopilotChatCommit<CR>", "Write commit message" },
   },
 }
 
+local vmappings = {
+  c = {
+    name = "Copilot",
+    e = { "<cmd>CopilotChatExplain<CR>", "Explain code" },
+    t = { "<cmd>CopilotChatTests<CR>", "Generate tests" },
+    f = { "<cmd>CopilotChatFix<CR>", "Fix bug in selected code" },
+    o = { "<cmd>CopilotChatOptimize<CR>", "Optimize code" },
+    d = { "<cmd>CopilotChatDocs<CR>", "Write docs for selected code" },
+  },
+};
+
 which_key.register(mappings, which_key_config.opts)
+which_key.register(vmappings, which_key_config.vopts)
