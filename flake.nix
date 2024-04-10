@@ -319,7 +319,7 @@
           javaExtras = extraJavaItems pkgs;
           devops = true;
           latex = false;
-          ai = false;
+          ai = true;
 
           # this does not have an associated category of plugins, 
           # but lua can still check for it

@@ -97,6 +97,7 @@ local plugins = {
       "nvim-neotest/nvim-nio", -- important for dapui
       "theHamsta/nvim-dap-virtual-text", -- show line visual
       'leoluz/nvim-dap-go', -- debugger for go
+      'mfussenegger/nvim-dap-python' -- debugger for python
     },
     config = function() require("chrishrb.plugins.config.dap") end,
     enabled = nixCats("debug"),
@@ -130,26 +131,22 @@ local plugins = {
     config = function() require("chrishrb.plugins.config.cmp") end,
     event = "InsertEnter",
   },
+
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
+    -- CopilotChat
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
     enabled = nixCats("ai"),
+    dependencies = {
+      {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+      },
+      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+    },
     config = function()
       require("chrishrb.plugins.config.copilot")
     end,
-  },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-    },
-    enabled = nixCats("ai"),
-    opts = {
-      debug = true, -- Enable debugging
-    },
   },
   {
     "zbirenbaum/copilot-cmp",
