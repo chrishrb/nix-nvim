@@ -44,7 +44,6 @@ local prompts = {
 
 chat.setup({
 	prompts = prompts,
-	selection = select.unnamed,
 })
 
 -- setup autocommand (custom buffer for chat)
@@ -97,9 +96,9 @@ local vmappings = {
 		t = { "<cmd>CopilotChatTests<CR>", "Generate tests" },
 		f = { "<cmd>CopilotChatFix<CR>", "Fix bug in selected code" },
 		o = { "<cmd>CopilotChatOptimize<CR>", "Optimize code" },
-		r = { "<cmd>CopilotChatReview<CR>", "Review code" },
-		R = { "<cmd>CopilotChatRefactor<CR>", "Refactor code" },
+		r = { "<cmd>CopilotChatRefactor<CR>", "Refactor code" },
 		n = { "<cmd>CopilotChatBetterNamings<CR>", "Better naming" },
+		R = { "<cmd>CopilotChatReview<CR>", "Review code" },
 	},
 }
 
