@@ -15,6 +15,7 @@ local prompts = {
 	Explain = "/COPILOT_EXPLAIN Write an explanation for the code above as paragraphs of text.",
 	Review = "Please review the following code and provide suggestions for improvement.",
 	Tests = "/COPILOT_TESTS Write a set of detailed unit test functions for the code above.",
+  Refactor = "Please refactor the following code to improve its clarity and readability.",
 	Fix = "/COPILOT_FIX There is a problem in this code. Rewrite the code to show it with the bug fixed.",
 	Optimize = "/COPILOT_REFACTOR Optimize the selected code to improve performance and readablilty.",
 	Docs = "/COPILOT_REFACTOR Write documentation for the selected code. The reply should be a codeblock containing the original code with the documentation added as comments. Use the most appropriate documentation style for the programming language used (e.g. JSDoc for JavaScript, docstrings for Python etc.",
