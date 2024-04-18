@@ -36,12 +36,6 @@ if nixCats("python") then
 	servers[#servers + 1] = "pylsp"
 end
 
-if nixCats("web") then
-	servers[#servers + 1] = "tsserver"
-	servers[#servers + 1] = "tailwindcss"
-	servers[#servers + 1] = "volar"
-end
-
 if nixCats("java") then
 	servers[#servers + 1] = "jdtls"
 end
@@ -52,6 +46,16 @@ end
 
 if nixCats("latex") then
 	servers[#servers + 1] = "texlab"
+end
+
+if nixCats("php") then
+	servers[#servers + 1] = "phpactor"
+end
+
+if nixCats("web") then
+	servers[#servers + 1] = "tsserver"
+	servers[#servers + 1] = "tailwindcss"
+	servers[#servers + 1] = "volar"
 end
 
 -- setup handlers

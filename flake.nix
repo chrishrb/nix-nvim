@@ -130,6 +130,9 @@
         latex = with pkgs; [
           texlab
         ];
+        php = with pkgs; [
+          phpactor
+        ];
       };
 
       # This is for plugins that will load at startup without using packadd:
@@ -318,8 +321,9 @@
           java = true;
           javaExtras = extraJavaItems pkgs;
           devops = true;
-          latex = false;
           ai = true;
+          latex = false;
+          php = false;
 
           # this does not have an associated category of plugins, 
           # but lua can still check for it

@@ -50,6 +50,9 @@ chat.setup({
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "copilot-*",
   callback = function()
+    vim.opt_local.relativenumber = true
+    vim.opt_local.number = true
+
     -- Get current filetype and set it to markdown if the current filetype is copilot-chat
     local ft = vim.bo.filetype
     if ft == "copilot-chat" then
