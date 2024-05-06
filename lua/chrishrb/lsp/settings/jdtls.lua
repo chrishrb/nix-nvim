@@ -18,7 +18,7 @@ local mappings = {
 		o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", "Organize Imports" },
 		v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", "Extract Variable" },
 		c = { "<Cmd>lua require('jdtls').extract_constant()<CR>", "Extract Constant" },
-		u = { "<Cmd>JdtUpdateConfig<CR>", "Update Config" },
+		u = { "<Cmd>lua require('jdtls').update_project_config()<CR>", "Update Config" },
 	},
 }
 
@@ -55,6 +55,11 @@ end
 which_key.register(mappings, which_key_config.opts)
 which_key.register(vmappings, which_key_config.vopts)
 
+
+local config_dir = vim.loop.os_homedir() .. "/.cache/jdtls/config"
+local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+local workspace_dir = vim.loop.os_homedir() .. "/.cache/jdtls/workspace/" .. project_name
+
 -- return config for java
 return {
 	on_attach = function(client, buffer)
@@ -65,6 +70,25 @@ return {
 			require("jdtls.dap").setup_dap_main_class_configs() -- discover main class
 		end
 	end,
+  cmd = {
+    vim.fn.exepath('jdtls'),
+
+    "--jvm-arg=-Declipse.application=org.eclipse.jdt.ls.core.id1",
+    "--jvm-arg=-Dosgi.bundles.defaultStartLevel=4",
+    "--jvm-arg=-Declipse.product=org.eclipse.jdt.ls.core.product",
+    "--jvm-arg=-Dlog.protocol=true",
+    "--jvm-arg=-Dlog.level=ALL",
+    "--jvm-arg=-Xmx1g",
+    "--jvm-arg=--add-modules=ALL-SYSTEM",
+    "--jvm-arg=--add-opens",
+    "--jvm-arg=java.base/java.util=ALL-UNNAMED",
+    "--jvm-arg=--add-opens",
+    "--jvm-arg=java.base/java.lang=ALL-UNNAMED",
+    "--jvm-arg=-javaagent:" .. nixCats("javaExtras.lombok") .. "/share/java/lombok.jar",
+
+    '-configuration', config_dir,
+    '-data', workspace_dir,
+  },
 	capabilities = require("chrishrb.lsp.handlers").capabilities,
 	settings = {
 		java = {
@@ -97,7 +121,7 @@ return {
 				},
 			},
 			format = {
-				enabled = false,
+				enabled = true,
 				-- settings = {
 				--   profile = "asdf"
 				-- }

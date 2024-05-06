@@ -283,6 +283,7 @@
     extraJavaItems = pkgs: {
       java-test = pkgs.vscode-extensions.vscjava.vscode-java-test;
       java-debug-adapter = pkgs.vscode-extensions.vscjava.vscode-java-debug;
+      lombok = pkgs.lombok;
     };
 
     # packageDefinitions:
