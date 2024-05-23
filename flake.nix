@@ -328,7 +328,7 @@
 
           # this does not have an associated category of plugins, 
           # but lua can still check for it
-          lspDebugMode = true;
+          lspDebugMode = false;
 
           # you could also pass something else:
           colorscheme = "catppuccin";
